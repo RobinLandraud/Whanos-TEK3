@@ -1,0 +1,11 @@
+FROM gcc:11.2-bullseye AS build
+
+ENV APP_DIR /app
+WORKDIR $APP_DIR
+
+COPY . $APP_DIR
+
+RUN make
+RUN rm -rf Makefile $APP_DIR
+
+CMD ["bash", "-c", "./app"]

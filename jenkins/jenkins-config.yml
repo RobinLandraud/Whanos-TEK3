@@ -1,0 +1,33 @@
+jenkins:
+  systemMessage: "Whanos jenkins"
+  # enable remote authentication
+  remoteSecurity:
+    enabled: true
+  # create admin user with password admin in local realm
+  securityRealm:
+    local:
+      allowsSignup: false
+      users:
+        - id: "admin"
+          name: "admin"
+          password: "admin"
+          description: "admin"
+  # assign admin role to admin user
+  authorizationStrategy:
+    roleBased:
+      roles:
+        global:
+          - name: "admin"
+            description: "admin"
+            permissions:
+              - "Overall/Administer"
+            assignments:
+              - "admin"
+  # Disable CSRF protection
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: true
+
+# location of groovy scripts to be executed on startup
+jobs:
+  - file : /jenkins/jobs.groovy

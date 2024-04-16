@@ -1,0 +1,11 @@
+FROM openjdk:11.0.12-bullseye AS build
+
+ENV APP_DIR /app
+WORKDIR $APP_DIR
+
+COPY . $APP_DIR
+
+RUN mvn package
+RUN rm -rf pom.xml $APP_DIR
+
+CMD ["bash", "-c", "java -jar app.jar"]

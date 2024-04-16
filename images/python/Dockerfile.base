@@ -1,0 +1,11 @@
+FROM python:3.10
+
+ENV APP_DIR /app
+WORKDIR $APP_DIR
+
+COPY . $APP_DIR
+
+RUN pip install -r requirements.txt
+RUN rm -rf requirements.txt $APP_DIR
+
+CMD ["python", "-m", "app"]

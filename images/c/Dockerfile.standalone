@@ -1,0 +1,18 @@
+FROM gcc:11.2-bullseye AS build
+
+ENV APP_DIR /app
+WORKDIR $APP_DIR
+
+COPY . $APP_DIR
+
+RUN make
+RUN rm -rf Makefile $APP_DIR
+
+FROM alpine:3.17
+
+RUN apk add --no-cache libc6-compat
+
+COPY --from=build $APP_DIR $APP_DIR
+WORKDIR $APP_DIR
+
+CMD ["bash", "-c", "./app"]
